@@ -2,18 +2,20 @@ var dashboardControllers = angular.module('dashboardControllers', []);
 
 dashboardControllers.controller('exBalancesCtrl', ['$scope', 'Balance',
     function ($scope, Balance) {
-        $scope.req = [];
-
         $scope.exchangeBalances = [];
 
         $scope.currencies = [];
 
+        $scope.totalBalances = [];
+
         Balance.getAll().success(function (response) {
-            $scope.req = response;
+            $scope.exchangeBalances = response;
         });
 
-        $scope.$watch('req', function (newVal) {
-            var currencies = [];
+        $scope.$watch('exchangeBalances', function (newVal) {
+            var currencies = [],
+                exchanges = [],
+                total = {};
 
             angular.forEach(newVal, function (exchange) {
                 angular.forEach(exchange.balances, function (balance) {
@@ -24,8 +26,6 @@ dashboardControllers.controller('exBalancesCtrl', ['$scope', 'Balance',
             }, currencies);
 
             $scope.currencies = currencies;
-
-            $scope.exchangeBalances = $scope.req;
         });
 }]);
 

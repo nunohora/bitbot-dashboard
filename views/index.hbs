@@ -19,7 +19,11 @@
         <tbody>
           <tr ng-repeat="exchange in exchangeBalances">
             <td>{% exchange.name %}</td>
-            <td ng-repeat="currency in exchange.balances | orderBy:currencies ">{% currency.amount %}</td>
+            <td ng-repeat="currency in exchange.balances">{% currency.amount %}</td>
+          </tr>
+          <tr>
+            <td>Total</td>
+            <td ng-repeat="total in totalBalances">{% total.amount %}</td>
           </tr>
         </tbody>
       </table>
