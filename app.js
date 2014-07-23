@@ -1,5 +1,5 @@
 var express = require('express');
-var routes = require('./routes');
+var routes = require('./routes/routes');
 var http = require('http');
 var path = require('path');
 
@@ -18,7 +18,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
-app.get('/balances/:param/', routes.balances);
+app.get('/balances/:param', routes.balances);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

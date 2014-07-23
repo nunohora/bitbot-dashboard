@@ -3,6 +3,16 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
+.table-container table {
+    width: 400px;
+}
+
+table,
+table th {
+  text-align: center;
+}
+
+table td:first-child:hover {
+    cursor: pointer;
+    background-color: #464545;
 }
