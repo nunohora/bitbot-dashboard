@@ -15,33 +15,34 @@ var ExchangeBalanceSchema = new mongoose.Schema({
 
 mongoose.model('ExchangeBalance', ExchangeBalanceSchema);
 
+var exchange = db.model('ExchangeBalance');
+
 module.exports = {
     getExchangeBalances: function (param) {
         var dfd = new $.Deferred(),
             collection = db.collection('exchangebalances'),
             response = [],
-            counter = 0,
-            exchange,
-            item;
+            counter = 0;
 
         if (param === 'all') {
             collection.distinct('name', function (err, results) {
                 _.each(results, function (exName) {
-                    collection.findOne({ name: exName }, function (err, result) {
-                        item = { name: result.name, balances: result.balances };
-                        response.push(item);
-                        counter++;
+                    exchange.find({ name: exName }).sort('-when').exec(function (err, resp) {
+                            response.push({
+                                name: _.first(resp).name,
+                                balances: _.first(resp).balances
+                            });
 
-                        if (counter === results.length) {
-                            dfd.resolve(JSON.stringify(response));
-                        }
+                            counter++;
+
+                            if (counter === results.length) {
+                                dfd.resolve(JSON.stringify(response));
+                            }
                     });
                 }, this);
             });
         }
         else {
-            exchange = db.model('ExchangeBalance');
-
             exchange.find({'name': param}, function (err, response) {
                 var currencies = {};
 

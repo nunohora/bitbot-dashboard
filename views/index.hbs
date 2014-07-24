@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    {{> exchangeBalances}}
-    {{> exchangeChart}}
+    <div class="row">
+      {{> exchangeBalances}}
+      {{> exchangeChart}}
+    </div>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bower_components/angular/angular.js"></script>
     <script src="js/bower_components/highcharts-ng/src/highcharts-ng.js"></script>

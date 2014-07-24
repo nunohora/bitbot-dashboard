@@ -27,7 +27,7 @@ dashboardControllers.controller('exBalancesCtrl', ['$scope', '$rootScope', 'Bala
                         total[balance.currency] = balance.amount;
                     }
                     else {
-                        total[balance.currency] = total[balance.currency] + balance.amount;
+                        total[balance.currency] = +(total[balance.currency] + balance.amount).toFixed(8);
                     }
                 }, this);
             }, currencies);
@@ -39,6 +39,10 @@ dashboardControllers.controller('exBalancesCtrl', ['$scope', '$rootScope', 'Bala
         $scope.getExChart = function (exchange) {
             $rootScope.$broadcast('createChart', exchange);
         };
+
+        $scope.getTotalChart = function () {
+            $rootScope.$broadcast('createTotalChart');
+        }
 }]);
 
 dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
@@ -52,54 +56,46 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
                 }
             },
             series: [],
-            yAxis: [{
-                    id: 'axis-btc',
-                    title: {
-                        text: 'btc'
-                    },
-                    min: 0
-                },
-                {
-                    id: 'axis-ltc',
-                    title: {
-                        text: 'ltc'
-                    },
-                    min: 0,
-                    opposite: true
-                },
-                {
-                    id: 'axis-usd',
-                    title: {
-                        text: 'usd'
-                    },
-                    min: 0
-                }],
-            title: {
-                text: ''
-            },
-            xAxis: {currentMin: 0, currentMax: 30, minRange: 1},
+            yAxis: [
+                { id: 'axis-btc', title: { text: 'btc' }, min: 0 },
+                { id: 'axis-ltc', title: { text: 'ltc' }, min: 0, opposite: true }
+            ],
+            title: { text: '' },
+            tooltip: { shared: true },
+            xAxis: {currentMin: 0, minRange: 1, allowDecimals: false},
             loading: true
         };
 
-        $scope.$on('createChart', function (event, exchangeName) {
-            var counter = 0;
+        function populateChartData (data) {
+            var series = [];
 
+            angular.forEach(data, function (dataItem, idx) {
+                series.push({
+                    name: idx,
+                    data: dataItem,
+                    id: 'series-' + idx,
+                    yAxis: 'axis-' + idx
+                });
+            }, this);
+
+            $scope.exChartConfig.series = series;
+        }
+
+        $scope.$on('createChart', function (event, exchangeName) {
             $scope.exChartConfig.title.text = exchangeName;
 
-            Balance.getExchangeBalances(exchangeName).success(function (response) {
-                var series = [],
-                    yAxis = [];
+            Balance.getExchangeBalances(exchangeName).success(populateChartData);
+        });
+
+        $scope.$on('createTotalChart', function () {
+            $scope.exChartConfig.title.text = 'Total Balances';
+
+            Balance.getTotalBalances().success(function (response) {
+                var series = [];
 
                 angular.forEach(response, function (data, idx) {
-                    series.push({
-                        name: idx,
-                        data: data,
-                        id: 'series-' + idx,
-                        yAxis: 'axis-' + idx
-                    });
-                }, this);
 
-                $scope.exChartConfig.series = series;
+                })
             });
         });
 }]);

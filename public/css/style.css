@@ -1,6 +1,8 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  width: 1280px;
+  margin: auto;
 }
 
 .table-container {
@@ -8,8 +10,8 @@ body {
 }
 
 .chart-container {
-    float: right;
     width: 900px;
+    float: right;
 }
 
 table,

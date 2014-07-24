@@ -11,9 +11,9 @@
         <td>{% exchange.name %}</td>
         <td ng-repeat="currency in exchange.balances">{% currency.amount %}</td>
       </tr>
-      <tr>
+      <tr class="danger">
         <td>Total</td>
-        <td ng-repeat="total in totalBalances">{% total %}</td>
+        <td ng-repeat="total in totalBalances" ng-click="getTotalChart()">{% total %}</td>
       </tr>
     </tbody>
   </table>
