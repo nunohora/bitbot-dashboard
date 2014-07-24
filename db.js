@@ -7,12 +7,21 @@ var $           = require('jquery'),
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () { console.log('connection open'); });
 
+var ExchangeBalanceSchema = new mongoose.Schema({
+    name: String,
+    balances: Array,
+    when: Date
+});
+
+mongoose.model('ExchangeBalance', ExchangeBalanceSchema);
+
 module.exports = {
     getExchangeBalances: function (param) {
         var dfd = new $.Deferred(),
             collection = db.collection('exchangebalances'),
             response = [],
             counter = 0,
+            exchange,
             item;
 
         if (param === 'all') {
@@ -27,17 +36,28 @@ module.exports = {
                             dfd.resolve(JSON.stringify(response));
                         }
                     });
-                }, this)
+                }, this);
             });
         }
         else {
-            collection.findOne({ name: param}, function (err, result) {
-                dfd.resolve({
-                    name: result.name,
-                    balances: result.balances
-                });
+            exchange = db.model('ExchangeBalance');
+
+            exchange.find({'name': param}, function (err, response) {
+                var currencies = {};
+
+                _.each(response, function (result) {
+                    _.each(result.balances, function (balance) {
+                        if (!currencies[balance.currency]) {
+                            currencies[balance.currency] = [];
+                        }
+
+                        currencies[balance.currency].push(balance.amount);
+                    }, this);
+                }, this);
+
+                dfd.resolve(currencies);
             });
         }
         return dfd.promise();
     }
-}
+};

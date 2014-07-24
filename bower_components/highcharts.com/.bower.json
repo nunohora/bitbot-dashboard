@@ -1,0 +1,35 @@
+{
+  "name": "Highcharts Working Repo",
+  "main": "bower-info.js",
+  "ignore": [
+    "build",
+    "errors",
+    "exporting-server",
+    "gfx",
+    "js",
+    "lib",
+    "samples",
+    "studies",
+    "test",
+    "tools",
+    "utils",
+    ".gitignore",
+    "ant",
+    "build.md",
+    "build.properties",
+    "build.xml",
+    "readme.md"
+  ],
+  "homepage": "https://github.com/highslide-software/highcharts.com",
+  "version": "4.0.3",
+  "_release": "4.0.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v4.0.3",
+    "commit": "1fe10cde06dd7d58e111d21841f0ec8962a11699"
+  },
+  "_source": "git://github.com/highslide-software/highcharts.com.git",
+  "_target": "~4.0.3",
+  "_originalSource": "highcharts.com",
+  "_direct": true
+}

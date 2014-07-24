@@ -3,8 +3,13 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-.table-container table {
-    width: 400px;
+.table-container {
+    float: left;
+}
+
+.chart-container {
+    float: right;
+    width: 900px;
 }
 
 table,
@@ -12,7 +17,6 @@ table th {
   text-align: center;
 }
 
-table td:first-child:hover {
+table tbody tr:hover {
     cursor: pointer;
-    background-color: #464545;
 }
