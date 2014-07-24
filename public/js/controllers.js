@@ -52,26 +52,52 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
                 }
             },
             series: [],
+            yAxis: [{
+                    id: 'axis-btc',
+                    title: {
+                        text: 'btc'
+                    },
+                    min: 0
+                },
+                {
+                    id: 'axis-ltc',
+                    title: {
+                        text: 'ltc'
+                    },
+                    min: 0,
+                    opposite: true
+                },
+                {
+                    id: 'axis-usd',
+                    title: {
+                        text: 'usd'
+                    },
+                    min: 0
+                }],
             title: {
-                text: 'Hello'
+                text: ''
             },
-            xAxis: {currentMin: 0, currentMax: 10, minRange: 1},
-            loading: false
+            xAxis: {currentMin: 0, currentMax: 30, minRange: 1},
+            loading: true
         };
 
         $scope.$on('createChart', function (event, exchangeName) {
+            var counter = 0;
+
             $scope.exChartConfig.title.text = exchangeName;
 
             Balance.getExchangeBalances(exchangeName).success(function (response) {
-                var series = [];
+                var series = [],
+                    yAxis = [];
 
                 angular.forEach(response, function (data, idx) {
-                    this.push({
+                    series.push({
                         name: idx,
                         data: data,
-                        id: 'series-' + idx
+                        id: 'series-' + idx,
+                        yAxis: 'axis-' + idx
                     });
-                }, series);
+                }, this);
 
                 $scope.exChartConfig.series = series;
             });
