@@ -93,7 +93,6 @@ module.exports = {
             currencies = {};
 
         totalBalance.find().exec(function (err, resp) {
-
             _.each(resp, function (result) {
                 _.each(result.balances, function (balance) {
                     if (!currencies[balance.currency]) {
