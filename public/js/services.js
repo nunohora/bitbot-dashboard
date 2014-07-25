@@ -8,6 +8,9 @@ dashboardServices.factory('Balance', ['$http',
             },
             getExchangeBalances: function (param) {
                 return $http.get('balances/' + param);
+            },
+            getTotalBalances: function () {
+                return $http.get('totalbalances');
             }
         };
     }]);

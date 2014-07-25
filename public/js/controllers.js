@@ -58,7 +58,8 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
             series: [],
             yAxis: [
                 { id: 'axis-btc', title: { text: 'btc' }, min: 0 },
-                { id: 'axis-ltc', title: { text: 'ltc' }, min: 0, opposite: true }
+                { id: 'axis-ltc', title: { text: 'ltc' }, min: 0, opposite: true },
+                { id: 'axis-usd', title: { text: 'usd' }, min: 0 }
             ],
             title: { text: '' },
             tooltip: { shared: true },
@@ -90,13 +91,7 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
         $scope.$on('createTotalChart', function () {
             $scope.exChartConfig.title.text = 'Total Balances';
 
-            Balance.getTotalBalances().success(function (response) {
-                var series = [];
-
-                angular.forEach(response, function (data, idx) {
-
-                })
-            });
+            Balance.getTotalBalances().success(populateChartData);
         });
 }]);
 

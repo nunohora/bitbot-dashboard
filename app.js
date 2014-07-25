@@ -20,6 +20,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
 app.get('/balances/:param', routes.balances);
+app.get('/totalbalances', routes.totalBalances);
+app.get('/latesttrades/:param', routes.latestTrades);
 
 //Handlebars Configuration
 hbs.registerPartials(__dirname + '/views/partials');
