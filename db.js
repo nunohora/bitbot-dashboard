@@ -30,7 +30,8 @@ var TradeSchema = new mongoose.Schema({
         amount: Number
     },
     profit: Number,
-    when: Date
+    when: Date,
+    market: String
 });
 
 mongoose.model('ExchangeBalance', ExchangeBalanceSchema);
@@ -111,10 +112,21 @@ module.exports = {
 
     getLatestTrades: function () {
         var dfd = new $.Deferred(),
-            collection = db.collection('trade');
+            collection = db.collection('trade'),
+            result = [];
 
-        trade.find().limit(20).exec(function (err, resp) {
-            dfd.resolve(resp);
+        trade.find().limit(20).sort('-when').exec(function (err, resp) {
+            _.each(resp, function (newTrade) {
+                result.push({
+                    profit: newTrade.profit,
+                    when: newTrade.when,
+                    exchange1: newTrade.exchange1,
+                    exchange2: newTrade.exchange2,
+                    market: newTrade.market
+                })
+            }, this);
+
+            dfd.resolve(result);
         });
 
         return dfd.promise();

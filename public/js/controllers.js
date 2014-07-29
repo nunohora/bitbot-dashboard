@@ -95,6 +95,21 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
         });
 }]);
 
-dashboardControllers.controller('tradesCtrl', ['$scope', function ($scope) {
+dashboardControllers.controller('tradesCtrl', ['$scope', 'Balance',
+    function ($scope, Balance) {
 
+        $scope.latestTrades = [];
+
+        Balance.getLatestTrades(20).success(function (response) {
+            $scope.latestTrades = response;
+        });
 }]);
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<div class="table-container" ng-controller="tradesCtrl">
+  <table class="table table-striped table-hover">
+    <thead>
+      <th>Market</th>
+      <th>Ex 1 name</th>
+      <th>Ex 1 buy price</th>
+      <th>Ex 1 buy amount</th>
+      <th>Ex 2 name</th>
+      <th>Ex 2 sell price</th>
+      <th>Ex 2 sell amount</th>
+      <th>Date</th>
+      <th>Profit</th>
+    </thead>
+    <tbody>
+      <tr ng-repeat="trade in latestTrades">
+        <td>{% trade.market %}</td>
+        <td>{% trade.exchange1.name %}</td>
+        <td>{% trade.exchange1.buyPrice %}</td>
+        <td>{% trade.exchange1.amount %}</td>
+        <td>{% trade.exchange2.name %}</td>
+        <td>{% trade.exchange2.sellPrice %}</td>
+        <td>{% trade.exchange2.amount %}</td>
+        <td>{% trade.when | date: 'dd-MM-yy h:mm'%}</td>
+        <td>{% trade.profit %}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

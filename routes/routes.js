@@ -26,3 +26,9 @@ exports.latestTrades = function (req, res) {
         res.send(response);
     });
 }
+
+exports.totalWinnings = function (req, res) {
+    $.when(db.getTotalWinnings()).done(function (response) {
+        res.send(response);
+    });
+}
