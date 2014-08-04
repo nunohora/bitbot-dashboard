@@ -68,7 +68,7 @@ module.exports = {
             });
         }
         else {
-            exchange.find({'name': param}, function (err, response) {
+            exchange.find({'name': param}).sort('when').exec(function (err, response) {
                 var currencies = {};
 
                 _.each(response, function (result) {
@@ -81,7 +81,7 @@ module.exports = {
                     }, this);
                 }, this);
 
-                dfd.resolve(currencies);
+                dfd.resolve(JSON.stringify(currencies));
             });
         }
 
@@ -100,11 +100,11 @@ module.exports = {
                         currencies[balance.currency] = [];
                     }
 
-                    currencies[balance.currency].push(balance.amount);
+                    currencies[balance.currency].push(+balance.amount);
                 }, this);
             }, this);
 
-            dfd.resolve(currencies);
+            dfd.resolve(JSON.stringify(currencies));
         });
 
         return dfd.promise();
@@ -126,7 +126,26 @@ module.exports = {
                 })
             }, this);
 
-            dfd.resolve(result);
+            dfd.resolve(JSON.stringify(result));
+        });
+
+        return dfd.promise();
+    },
+
+    getTotalWinnings: function () {
+        var dfd = new $.Deferred(),
+            collection = db.collection('totalbalance'),
+            response = {
+                oldest: {},
+                newest: {}
+            };
+
+        totalBalance.findOne({}, {}, { sort: { 'when': 1 }}, function (err, resp) {
+            response.oldest = resp;
+            totalBalance.findOne({}, {}, { sort: { 'when': -1 }}, function (err, resp1) {
+                response.newest = resp1;
+                dfd.resolve(response);
+            });
         });
 
         return dfd.promise();

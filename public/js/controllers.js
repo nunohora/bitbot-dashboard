@@ -55,6 +55,7 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
                     zoomType: 'x'
                 }
             },
+            plotOptions: { line: { allowPointSelect: true } },
             series: [],
             yAxis: [
                 { id: 'axis-btc', title: { text: 'btc' }, min: 0 },
@@ -63,7 +64,7 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
             ],
             title: { text: '' },
             tooltip: { shared: true },
-            xAxis: {currentMin: 0, minRange: 1, allowDecimals: false},
+            xAxis: { currentMin: 0, minRange: 1, allowDecimals: false },
             loading: true
         };
 
@@ -75,7 +76,8 @@ dashboardControllers.controller('exchangeChartCtrl', ['$scope', 'Balance',
                     name: idx,
                     data: dataItem,
                     id: 'series-' + idx,
-                    yAxis: 'axis-' + idx
+                    yAxis: 'axis-' + idx,
+                    stack:  1
                 });
             }, this);
 
@@ -105,11 +107,9 @@ dashboardControllers.controller('tradesCtrl', ['$scope', 'Balance',
         });
 }]);
 
-
-
-
-
-
-
-
-
+dashboardControllers.controller('winningsCtrl', ['$scope', 'Balance',
+    function ($scope, Balance) {
+        Balance.getTotalWinnings().success(function (response) {
+            console.log('response: ', response);
+        });
+}]);

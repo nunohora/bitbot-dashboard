@@ -14,6 +14,9 @@ dashboardServices.factory('Balance', ['$http',
             },
             getLatestTrades: function (param) {
                 return $http.get('latesttrades/' + param);
+            },
+            getTotalWinnings: function () {
+                return $http.get('totalwinnings');
             }
         };
     }]);

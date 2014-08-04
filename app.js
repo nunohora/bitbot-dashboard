@@ -22,6 +22,7 @@ app.get('/', routes.index);
 app.get('/balances/:param', routes.balances);
 app.get('/totalbalances', routes.totalBalances);
 app.get('/latesttrades/:param', routes.latestTrades);
+app.get('/totalwinnings', routes.totalWinnings);
 
 //Handlebars Configuration
 hbs.registerPartials(__dirname + '/views/partials');
