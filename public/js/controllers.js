@@ -113,3 +113,10 @@ dashboardControllers.controller('winningsCtrl', ['$scope', 'Balance',
             console.log('response: ', response);
         });
 }]);
+
+dashboardControllers.controller('isAliveCtrl', ['$scope', 'Balance',
+    function ($scope, Balance) {
+        Balance.getIsAlive().success(function (response) {
+            console.log('is alive response:' , response);
+        });
+}]);

@@ -1,6 +1,8 @@
 var $  = require('jquery'),
     _  = require('underscore'),
-    db = require('../db');
+    db = require('../db'),
+    sys = require('sys'),
+    exec = require('child_process').exec;
 
 exports.index = function (req, res) {
   res.render('index');
@@ -63,4 +65,16 @@ exports.totalWinnings = function (req, res) {
             });
         });
     });
+}
+
+exports.isAlive = function (req, res) {
+    function puts(error, stdout, stderr) {
+        console.log('hereeeee');
+        console.log(stdout);
+        console.log(error);
+        console.log(stderr);
+        sys.puts(stdout);
+    }
+
+    exec("telnet localhost 3000", puts);
 }

@@ -17,6 +17,9 @@ dashboardServices.factory('Balance', ['$http',
             },
             getTotalWinnings: function () {
                 return $http.get('totalwinnings');
+            },
+            getIsAlive: function () {
+                return $http.get('isAlive');
             }
         };
     }]);
