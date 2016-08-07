@@ -6,6 +6,7 @@ var hbs = require('hbs');
 
 var app = express();
 
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
